@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>JSF Start</title>
+    <link rel="stylesheet" href="../styles/style.css" />
+</h:head>
+<h:body>
+    <header>
+        <div class="header">
+            <h1 class="center">Лабораторная работа №3</h1>
+            <h2 class="center">Программирование интернет-приложений</h2>
+            <h3 class="center"> Вариант: 465 </h3>
+            <div style="float: right">
+                <p style="text-align: left">
+                    Создатель: Бекоев Андрей<br/>
+                    Преподаватель: Киреев Валерий Юрьевич<br/>
+                </p>
+            </div>
+        </div>
+    </header>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <div class="center">
+        <p id="time" class="center"></p>
+    </div>
+    <div class="center">
+        <h:form>
+            <h:commandButton value="Основная страница" action="main?faces-redirect=true"/>
+        </h:form>
+    </div>
+
+    <script type="text/javascript">
+        function updateTime() {
+            let now = new Date();
+            timeField.innerHTML = "Текущее время: " + now.toString();
+        }
+        let timeField = document.getElementById("time");
+        updateTime();
+        setInterval(updateTime, 6000);
+    </script>
+
+</h:body>
+</html>
