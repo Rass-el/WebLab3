@@ -13,8 +13,7 @@ function paint(r = null) {
 
     let bgColor = "#FFFFFF";
     let gridColor = "#C0C0C0";
-    let fgColor = "#1E90FF";
-    let areaColor = "#35595F";
+    let areaColor = "#1E90FF";
     let axisColor = "#000000";
     let possibleAreaColor = "#FFFFFF";
 
@@ -47,7 +46,7 @@ function paint(r = null) {
         console.log(document.getElementById("main-form:spinner").value);
 
         console.log(canvasX + " " + canvasY);
-        let [x, y] = convertCanvasToCleanCoordinates(canvasX, canvasY, radius, centerX, centerY, pointDistance);
+        let [x, y] = fromAbsoluteToDecarteCoordinates(canvasX, canvasY, radius, centerX, centerY, pointDistance);
         console.log("Координаты: " + x + " " + y);
 
         document.getElementById("hiddenX").value = x;
@@ -87,12 +86,12 @@ function paint(r = null) {
     context.stroke();
 
     // DRAWING axis and numbers
-    context.strokeStyle = fgColor;
-    context.fillStyle = fgColor;
+    context.strokeStyle = axisColor;
+    context.fillStyle = axisColor;
     context.font = textSize + "px monospace";
     context.beginPath();
 
-    // X axis (with arrows!)
+    // X axis
     context.moveTo(MARGIN, centerY);
     context.lineTo(width - MARGIN, centerY);
     context.lineTo(width - MARGIN - arrowLength, centerY - arrowWidth);
@@ -100,7 +99,7 @@ function paint(r = null) {
     context.lineTo(width - MARGIN - arrowLength, centerY + arrowWidth);
     context.fillText("X", width - MARGIN + textMarginX, centerY);
 
-    // Y axis (with arrows too!)
+    // Y axis
     context.moveTo(centerX, height - MARGIN);
     context.lineTo(centerX, MARGIN);
     context.lineTo(centerX - arrowWidth, MARGIN + arrowLength);
@@ -126,22 +125,14 @@ function paint(r = null) {
     context.stroke();
 
     // DRAWING possible areas for x and y
-    let [left, bottom] = convertCleanToCanvasCoordinates(-2, -3, radius, centerX, centerY, pointDistance);
-    let [right, top] = convertCleanToCanvasCoordinates(2, 3, radius, centerX, centerY, pointDistance);
+    let [left, bottom] = fromDecarteToAbsoluteCoordinates(-2, -3, radius, centerX, centerY, pointDistance);
+    let [right, top] = fromDecarteToAbsoluteCoordinates(2, 3, radius, centerX, centerY, pointDistance);
 
     if (left == null) left = MARGIN;
     if (top == null) top = MARGIN;
     if (right == null) right = width - MARGIN;
     if (bottom == null) bottom = height - MARGIN;
 
-    context.fillStyle = fgColor;
-    context.globalAlpha = 0.2;
-
-    context.fillRect(MARGIN, MARGIN, width - MARGIN * 2, top - MARGIN); // top box
-    context.fillRect(MARGIN, bottom, width - MARGIN * 2, height - bottom - MARGIN); // bottom box
-
-    context.fillRect(MARGIN, top, left - MARGIN, bottom - top); // left box
-    context.fillRect(right, top, width - right - MARGIN, bottom - top); // right box
 
     context.globalAlpha = 1;
 
@@ -159,7 +150,7 @@ function paint(r = null) {
     });
 
     for (let i = 0; i < historyX.length; i++) {
-        let [dotX, dotY] = convertCleanToCanvasCoordinates(historyX[i], historyY[i], radius, centerX, centerY, pointDistance);
+        let [dotX, dotY] = fromDecarteToAbsoluteCoordinates(historyX[i], historyY[i], radius, centerX, centerY, pointDistance);
         if (dotX == null || dotY == null) continue;
 
         context.beginPath();
@@ -178,7 +169,7 @@ function calculateHit(x, y, r) {
            (x >= 0 && y <= 0 && y >= 2 * x - r);
 }
 
-function convertCleanToCanvasCoordinates(x, y, r, centerX, centerY, pointDistance) {
+function fromDecarteToAbsoluteCoordinates(x, y, r, centerX, centerY, pointDistance) {
     let ratioX = x / r * 2;
     let ratioY = y / r * 2;
 
@@ -192,7 +183,7 @@ function convertCleanToCanvasCoordinates(x, y, r, centerX, centerY, pointDistanc
     return [canvasX, canvasY];
 }
 
-function convertCanvasToCleanCoordinates(canvasX, canvasY, r, centerX, centerY, pointDistance) {
+function fromAbsoluteToDecarteCoordinates(canvasX, canvasY, r, centerX, centerY, pointDistance) {
     let ratioX = ( canvasX - centerX ) / pointDistance;
     let ratioY = ( centerY - canvasY ) / pointDistance;
 

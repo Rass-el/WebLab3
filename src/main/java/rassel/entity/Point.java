@@ -9,10 +9,10 @@ public class Point {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "point_id")
     private int pointID;
-    private float x;
-    private float y;
+    private double x;
+    private double y;
     @Column(name = "radius")
-    private float r;
+    private double r;
 
     @Column(name = "is_inside")
     private int isInside;
@@ -36,27 +36,27 @@ public class Point {
         this.pointID = pointID;
     }
 
-    public float getX() {
+    public double getX() {
         return x;
     }
 
-    public void setX(float x) {
+    public void setX(double x) {
         this.x = x;
     }
 
-    public float getY() {
+    public double getY() {
         return y;
     }
 
-    public void setY(float y) {
+    public void setY(double y) {
         this.y = y;
     }
 
-    public float getR() {
+    public double getR() {
         return r;
     }
 
-    public void setR(float r) {
+    public void setR(double r) {
         this.r = r;
     }
 

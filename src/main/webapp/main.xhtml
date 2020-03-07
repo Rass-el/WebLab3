@@ -8,9 +8,9 @@
 
 <h:head>
     <title>JSF Main</title>
-    <link rel="stylesheet" href="../styles/style.css" />
-    <script src="../scripts/jquery-3.4.1.js"></script>
-    <script defer="defer" src="../scripts/canvas.js"></script>
+    <link rel="stylesheet" href="styles/style.css" />
+    <script src="scripts/jquery-3.4.1.js"></script>
+    <script defer="defer" src="scripts/canvas.js"></script>
 </h:head>
 <h:body>
     <header>
@@ -19,9 +19,7 @@
         </p>
     </header>
 
-    <p class="center">
-        <canvas id="areaCanvas" width="400px" height="400px">Ваш браузер не поддерживает данное изображение. Земля пухом!</canvas>
-    </p>
+
     <h:form id="hiddenForm" prependId="false">
         <h:inputHidden id="hiddenX" name="x" value="#{PointsManager.point.x}"
                        required="true" requiredMessage="Значение X не установлено." />
@@ -38,6 +36,12 @@
     <div class="center">
 
         <h:form id="main-form" method="post">
+            <p:commandButton id="commandButton" update="pointsTable m1 m2" styleClass="button"
+                             ajax="true" action="#{PointsManager.addPoint()}" oncomplete="paint()" value="" />
+            <p class="center">
+                <canvas id="areaCanvas" width="400px" height="400px">Ваш браузер не поддерживает данное изображение. Земля пухом!</canvas>
+            </p>
+            <br /> <br />
             <p style="font-weight: 500" id="group">
                 <h:outputLabel value="Изменения по X:" for="radio"/> <br />
                 <h:selectOneRadio id="radio" value="#{PointsManager.point.x}">
@@ -53,23 +57,28 @@
                 </h:selectOneRadio>
 
                 <br /> Изменения по Y: <br />
-                <p:inputText id="textfield" name="y" placeholder="(-5;5)" validatorMessage="Введите значение в интервале (-5;5)!" value="#{PointsManager.point.y}">
-                    <f:validateDoubleRange minimum="-5" maximum="5" />
+                <p:inputText id="textfield" name="y" size="15" placeholder="(-5;5)" value="#{PointsManager.point.y}"
+                             required="true" requiredMessage="Введите Y"
+                             converterMessage="Ну че за дела..."
+                             validatorMessage="Введите значение в интервале (-5;5) и не длиннее 13 цифр после запятой!" >
+                    <f:converter converterId="myConverter"/>
+                    <f:validator validatorId="myValidator" />
                     <f:validateLength maximum="15" />
                 </p:inputText>
-                <h:message id="m6" for="textfield" style="color:red"/>
+                <h:message id="m1" for="textfield" style="color:red"/>
 
                 <br /> Изменения радиуса R: <br />
-                <p:spinner id="spinner" validatorMessage="Выберите радиус!" stepFactor="0.1" min="0.1" max="3" value="#{PointsManager.point.r}"
+                <p:spinner id="spinner" stepFactor="0.1" min="0.1" max="3" value="#{PointsManager.point.r}"
                            widgetVar="spinner"
                            onchange="paint(this.value)"
-                           required="true" />
-                <h:message for="spinner" style="color: red" />
+                           required="true" requiredMessage="Выберите радиус!" >
+                    <f:converter converterId="myConverter" />
+                </p:spinner>
+                <h:message id="m2" for="spinner" style="color: red" />
                 <br/>
             </p>
 
-            <p:commandButton id="commandButton" update="pointsTable"
-                             ajax="true" action="#{PointsManager.addPoint()}" oncomplete="paint()" value="Стрелять!" />
+
         </h:form>
 
 

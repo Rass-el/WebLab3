@@ -18,7 +18,7 @@ public class PointsManagerBean {
 
     public void addPoint() {
         point.setInside(calculateHit(point.getX(), point.getY(), point.getR()));
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("database-datasource-orbis");
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("database");
         EntityManager entityManager = factory.createEntityManager();
 
         System.out.println("Пытаюсь добавить точку " + point.toString());
@@ -40,7 +40,7 @@ public class PointsManagerBean {
     }
 
     public List<Point> getPointsFromTable() {
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("database-datasource-orbis");
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("database");
         EntityManager entityManager = factory.createEntityManager();
         session = entityManager.unwrap(Session.class);
 
@@ -53,7 +53,7 @@ public class PointsManagerBean {
         return allQuery.getResultList();
     }
 
-    public int calculateHit(float x, float y, float r) {
+    public int calculateHit(double x, double y, double r) {
         if ((x <= 0 && x >= -r / 2 && y <= r && y >= 0) ||
                 (x <= 0 && y <= 0 && x * x + y * y <= r * r / 4) ||
                 (x >= 0 && y <= 0 && y >= 2 * x - r)) {
