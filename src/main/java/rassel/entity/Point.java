@@ -18,7 +18,7 @@ public class Point {
     private int isInside;
 
 
-    public Point(float x, float y, float r, int isInside) {
+    public Point(double x, double y, double r, int isInside) {
         this.x = x;
         this.y = y;
         this.r = r;

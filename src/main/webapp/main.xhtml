@@ -61,7 +61,7 @@
                              required="true" requiredMessage="Введите Y"
                              converterMessage="Ну че за дела..."
                              validatorMessage="Введите значение в интервале (-5;5) и не длиннее 13 цифр после запятой!" >
-                    <f:converter converterId="myConverter"/>
+                    <f:converter converterId="myConverter" />
                     <f:validator validatorId="myValidator" />
                     <f:validateLength maximum="15" />
                 </p:inputText>
@@ -83,7 +83,7 @@
 
 
         <h:panelGroup id="pointsTable">
-            <h:dataTable value="#{PointsManager.points}" var="myPoint" border="1"
+            <h:dataTable value="#{PointsManager.getPointsFromTable()}" var="myPoint" border="1"
                          columnClasses="history-x,history-y,history-r,history-result">
                 <h:column>
                     <f:facet name="header">X</f:facet>
@@ -101,7 +101,7 @@
                 </h:column>
 
                 <h:column>
-                    <f:facet name="header">isInside</f:facet>
+                    <f:facet name="header">Результат</f:facet>
                     #{myPoint.getInside() == 1 ? "Попал!" : "Промазал!"}
                 </h:column>
             </h:dataTable>

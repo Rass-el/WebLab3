@@ -7,17 +7,16 @@
 
     <persistence-unit name="database">
 
-        <jta-data-source>java:jboss/datasources/oracleDS</jta-data-source>
+        <jta-data-source>java:jboss/datasources/postgresDS</jta-data-source>
         <class>rassel.entity.Point</class>
         <properties>
-            <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver" />
-            <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:orbis" />
-            <property name="javax.persistence.jdbc.user" value="s265938" />
-            <property name="javax.persistence.jdbc.password" value="toa763" />
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/postgres" />
+            <property name="javax.persistence.jdbc.user" value="" />
+            <property name="javax.persistence.jdbc.password" value="" />
             <property name="hibernate.show_sql" value="true" />
             <property name="hibernate.format_sql" value="true" />
             <property name="hibernate.hbm2ddl.auto" value="update" />
-            <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
         </properties>
 
     </persistence-unit>
