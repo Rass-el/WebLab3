@@ -2,15 +2,11 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <h:head>
     <title>JSF Main</title>
-    <link rel="stylesheet" href="styles/style.css" />
-    <script src="scripts/jquery-3.4.1.js"></script>
-    <script defer="defer" src="scripts/canvas.js"></script>
+
 </h:head>
 <h:body>
     <header>
@@ -20,95 +16,39 @@
     </header>
 
 
-    <h:form id="hiddenForm" prependId="false">
-        <h:inputHidden id="hiddenX" name="x" value="#{PointsManager.point.x}"
-                       required="true" requiredMessage="Значение X не установлено." />
-        <h:inputHidden id="hiddenY" name="y" value="#{PointsManager.point.y}"
-                       required="true" requiredMessage="Значение Y не установлено." />
-        <h:inputHidden id="hiddenR" name="radius" value="#{PointsManager.point.r}"
-                       required="true" requiredMessage="Значение R не установлено." />
-
-        <p:commandButton id="hiddenButton" style="display: none;" update="pointsTable"
-                         ajax="true" action="#{PointsManager.addPoint()}" oncomplete="paint()"/>
-
-    </h:form>
-
     <div class="center">
 
         <h:form id="main-form" method="post">
-            <p:commandButton id="commandButton" update="pointsTable m1 m2" styleClass="button"
-                             ajax="true" action="#{PointsManager.addPoint()}" oncomplete="paint()" value="" />
-            <p class="center">
-                <canvas id="areaCanvas" width="400px" height="400px">Ваш браузер не поддерживает данное изображение. Земля пухом!</canvas>
-            </p>
+
             <br /> <br />
-            <p style="font-weight: 500" id="group">
-                <h:outputLabel value="Изменения по X:" for="radio"/> <br />
-                <h:selectOneRadio id="radio" value="#{PointsManager.point.x}">
-                    <f:selectItem  name="x" itemValue="-4" itemLabel="-4" />
-                    <f:selectItem  name="x" itemValue="-3" itemLabel="-3" />
-                    <f:selectItem  name="x" itemValue="-2" itemLabel="-2" />
-                    <f:selectItem  name="x" itemValue="-1" itemLabel="-1" />
-                    <f:selectItem  name="x" itemValue="0" itemLabel="0" />
-                    <f:selectItem  name="x" itemValue="1" itemLabel="1" />
-                    <f:selectItem  name="x" itemValue="2" itemLabel="2" />
-                    <f:selectItem  name="x" itemValue="3" itemLabel="3" />
-                    <f:selectItem  name="x" itemValue="4" itemLabel="4" />
-                </h:selectOneRadio>
-
-                <br /> Изменения по Y: <br />
-                <p:inputText id="textfield" name="y" size="15" placeholder="(-5;5)" value="#{PointsManager.point.y}"
-                             required="true" requiredMessage="Введите Y"
-                             converterMessage="Ну че за дела..."
-                             validatorMessage="Введите значение в интервале (-5;5) и не длиннее 13 цифр после запятой!" >
-                    <f:converter converterId="myConverter" />
-                    <f:validator validatorId="myValidator" />
-                    <f:validateLength maximum="15" />
-                </p:inputText>
-                <h:message id="m1" for="textfield" style="color:red"/>
-
-                <br /> Изменения радиуса R: <br />
-                <p:spinner id="spinner" stepFactor="0.1" min="0.1" max="3" value="#{PointsManager.point.r}"
-                           widgetVar="spinner"
-                           onchange="paint(this.value)"
-                           required="true" requiredMessage="Выберите радиус!" >
-                    <f:converter converterId="myConverter" />
-                </p:spinner>
-                <h:message id="m2" for="spinner" style="color: red" />
-                <br/>
+            <p style="font-weight: 500">
+                <h:outputLabel value="requestBean" />
+                <h:inputText placeholder="requestBean" value="#{requestBean.value}" />
             </p>
 
+            <br /> <br />
+            <p style="font-weight: 500">
+                <h:outputLabel value="sessionBean" />
+                <h:inputText placeholder="sessionBean" value="#{sessionBean.value}" />
+            </p>
+
+            <br /> <br />
+            <p style="font-weight: 500">
+                <h:outputLabel value="customBean" />
+                <h:inputText placeholder="customBean" value="#{customBean.value}" />
+            </p>
+
+            <h:commandButton id="commandButton" action="show.xhtml" value="отправить"/>
+
+        </h:form>
+        <h:form>
+
+            <h:commandButton value="start" action="page1.xhtml">
+                <f:actionListener type="CreateCustomScope" />
+            </h:commandButton>
 
         </h:form>
 
-
-        <h:panelGroup id="pointsTable">
-            <h:dataTable value="#{PointsManager.getPointsFromTable()}" var="myPoint" border="1"
-                         columnClasses="history-x,history-y,history-r,history-result">
-                <h:column>
-                    <f:facet name="header">X</f:facet>
-                    #{myPoint.x}
-                </h:column>
-
-                <h:column>
-                    <f:facet name="header">Y</f:facet>
-                    #{myPoint.y}
-                </h:column>
-
-                <h:column>
-                    <f:facet name="header">R</f:facet>
-                    #{myPoint.r}
-                </h:column>
-
-                <h:column>
-                    <f:facet name="header">Результат</f:facet>
-                    #{myPoint.getInside() == 1 ? "Попал!" : "Промазал!"}
-                </h:column>
-            </h:dataTable>
-        </h:panelGroup>
     </div>
-    <p class="center">
-    <a href="index.xhtml"> Стартовая страница </a>
-    </p>
 </h:body>
 </html>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <title>Web-программирование, дополнительное задание ЛР #3</title>
+    </h:head>
+
+    <h:body>
+        <div class="content-container">
+            <h1 class="general-header">Основная информация</h1>
+            <h:form>
+                <div class="container">
+                    <h:panelGrid columns="2" styleClass="form-table">
+                        <p class="form-label">Фамилия:</p>
+                        <h:inputText id="lastName" value="#{customBean.value}" required="true" requiredMessage="Фамилия должна быть указана"/>
+                    </h:panelGrid>
+                    <h:message styleClass="error-label" for="lastName"/>
+                </div>
+
+                <div class="container">
+                    <h:commandButton id="cancel" value="Отмена" action="back" styleClass="general-button" immediate="true">
+                        <f:actionListener type="DestroyCustomScope" />
+                    </h:commandButton>
+                    <h:commandButton id="next" value="Далее" action="next" styleClass="general-button"/>
+                </div>
+            </h:form>
+            <h:outputText value="Custom Scope существует? #{!empty sessionScope['CUSTOM_SCOPE'] ? 'Да' : 'Нет'}" styleClass="hint"/>
+        </div>
+    </h:body>
+
+</html>

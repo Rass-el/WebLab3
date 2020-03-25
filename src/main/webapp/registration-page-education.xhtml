@@ -11,12 +11,18 @@
 
     <h:body>
         <div class="content-container">
-            <h1 class="general-header">Добро пожаловать! Для подачи заявки на студенческое мероприятие, заполните поля во всех этапах</h1>
+            <h1 class="general-header">Информация о получаемом образовании (можно пропустить)</h1>
             <h:form>
                 <div class="container">
-                    <h:commandButton value="Подать заявку" action="start-registration" styleClass="general-button">
-                        <f:actionListener type="CreateCustomScope"/>
-                    </h:commandButton>
+                    <h:panelGrid columns="2" styleClass="form-table">
+                        <p class="form-label">Университет:</p>
+                        <h:inputText value="#{customBean.value}"/>
+                    </h:panelGrid>
+                </div>
+
+                <div class="container">
+                    <h:commandButton id="cancel" value="Назад" action="back" styleClass="general-button"/>
+                    <h:commandButton id="next" value="Далее" action="next" styleClass="general-button"/>
                 </div>
             </h:form>
             <h:outputText value="Custom Scope существует? #{!empty sessionScope['CUSTOM_SCOPE'] ? 'Да' : 'Нет'}" styleClass="hint"/>

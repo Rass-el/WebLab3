@@ -11,11 +11,19 @@
 
     <h:body>
         <div class="content-container">
-            <h1 class="general-header">Добро пожаловать! Для подачи заявки на студенческое мероприятие, заполните поля во всех этапах</h1>
+            <h1 class="general-header">Дополнительная информация (можно пропустить)</h1>
             <h:form>
                 <div class="container">
-                    <h:commandButton value="Подать заявку" action="start-registration" styleClass="general-button">
-                        <f:actionListener type="CreateCustomScope"/>
+                    <h:panelGrid columns="2" styleClass="form-table">
+                        <p class="form-label">О вас:</p>
+                        <h:inputTextarea value="#{customBean.value}"/>
+                    </h:panelGrid>
+                </div>
+
+                <div class="container">
+                    <h:commandButton value="Назад" action="back" styleClass="general-button"/>
+                    <h:commandButton value="Подтвердить" action="next" styleClass="general-button">
+                        <f:actionListener type="DestroyCustomScope"/>
                     </h:commandButton>
                 </div>
             </h:form>
